@@ -11,6 +11,7 @@
 /// </summary>
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -22,9 +23,10 @@ public class Player1Controller : MonoBehaviour
     private InputAction restart;
     private InputAction quit;
     private InputAction launch;
+    //private InputAction pause;
 
     //private bool isMoving;
-    [SerializeField] private float speed;
+    [SerializeField] private float speed = 4;
     [SerializeField] private Rigidbody2D paddle;
 
     private float moveDirection;
@@ -35,7 +37,6 @@ public class Player1Controller : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        speed = 4;
         PlayerInput();
     }
 
@@ -84,7 +85,8 @@ public class Player1Controller : MonoBehaviour
 
         quit.started += Quit_started;
         restart.started += Restart_started;
-        launch.performed += Launch_Performed;
+        launch.performed += Launch_performed;
+        //pause.started += Pause_started;
     }
 
     private void Restart_started(InputAction.CallbackContext obj)
@@ -100,7 +102,7 @@ public class Player1Controller : MonoBehaviour
         Application.Quit();
     }
 
-    private void Launch_Performed(InputAction.CallbackContext obj)
+    private void Launch_performed(InputAction.CallbackContext obj)
     {
         if (ReceivingGameInputs)
         {
@@ -108,12 +110,19 @@ public class Player1Controller : MonoBehaviour
             BallController.Launch();
         }
     }
+
+    //private void Pause_started(InputAction.CallbackContext obj)
+    //{
+        //brings up pause menu
+    //}
     #endregion
 
     public void OnDestroy()
     {
         restart.started -= Restart_started;
         quit.started -= Quit_started;
+        launch.performed -= Launch_performed;
+        //pause.started -= Pause_started;
         
     }
 }

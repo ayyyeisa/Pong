@@ -11,11 +11,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Runtime.CompilerServices;
+using UnityEngine.SceneManagement;
+using static UnityEngine.Rendering.VirtualTexturing.Debugging;
 
 public class BallController : MonoBehaviour
 {
     #region Variables
-    public bool wasLaunched; //change to private later
+    [SerializeField] private Rigidbody2D ball;
+    [SerializeField] bool wasLaunched;
+    //[SerializeField] private float ballSpeed = 3;
+    //private float ballSpeedMultiplier = .1f;
     private System.Random random;
     #endregion
 
@@ -28,14 +34,30 @@ public class BallController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(!wasLaunched)
+        {
+            transform.position = new Vector2(0, 0);
+        }
+    }
+    public void OnCollisionEnter2D(Collision2D collision)
+    {
+        //if(collision.gameObject.CompareTag("Wall") | collision.gameObject.CompareTag("Paddle"))
+        //{
+        //ballSpeed *= ballSpeedMultiplier;
+        //ball.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 1 * ballSpeed);
+        //}
+
+        if(collision.gameObject.tag == "Killbox")
+        {
+            transform.position = new Vector2(0, 0);
+        }
     }
 
     //private static float NextFloat(float min, float max)
     //{
-      //  random = new System.Random();
-        //double val = (random.NextDouble() * (max - min) + min);
-        //return (float)val;
+    //  random = new System.Random();
+    //double val = (random.NextDouble() * (max - min) + min);
+    //return (float)val;
     //}
 
     public void Launch()
