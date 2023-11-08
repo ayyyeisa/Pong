@@ -20,15 +20,14 @@ public class BallController : MonoBehaviour
     #region Variables
     [SerializeField] private Rigidbody2D ball;
     [SerializeField] bool wasLaunched;
-    //[SerializeField] private float ballSpeed = 3;
-    //private float ballSpeedMultiplier = .1f;
+    [SerializeField] private float ballSpeed = 3;
+    private float ballSpeedMultiplier = .1f;
     private System.Random random;
     #endregion
 
     // Start is called before the first frame update
     void Start()
     {
-        
     }
 
     // Update is called once per frame
@@ -41,16 +40,19 @@ public class BallController : MonoBehaviour
     }
     public void OnCollisionEnter2D(Collision2D collision)
     {
-        //if(collision.gameObject.CompareTag("Wall") | collision.gameObject.CompareTag("Paddle"))
-        //{
-        //ballSpeed *= ballSpeedMultiplier;
-        //ball.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 1 * ballSpeed);
-        //}
-
-        if(collision.gameObject.tag == "Killbox")
+        Debug.Log("Reached OnCollision");        
+        if(collision.gameObject.tag == "KillBox")
         {
-            transform.position = new Vector2(0, 0);
+            Debug.Log("Ball reached Killbox");
+            wasLaunched = false;
         }
+        else
+        {
+            Debug.Log("Ball speed should be increasing");
+            //ballSpeed *= ballSpeedMultiplier;
+            ball.velocity = Vector2.Reflect(ball.velocity, collision.contacts[0].normal);
+        }
+       
     }
 
     //private static float NextFloat(float min, float max)
@@ -65,7 +67,7 @@ public class BallController : MonoBehaviour
         if(!wasLaunched)
         {
             wasLaunched = true;
-           GetComponent<Rigidbody2D>().velocity = new Vector2(5f, 5f); //randomize this
+           GetComponent<Rigidbody2D>().velocity = new Vector2(-5f, 5f); //randomize this
             //GetComponent<Rigidbody2D>().velocity = new Vector2(random.NextFloat(10, 10), random.Next(10, 10));
         }
     }
