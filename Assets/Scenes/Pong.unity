@@ -183,7 +183,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: b725d2cd9e402f54b8823e0895bcdfad, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -219,7 +219,7 @@ CircleCollider2D:
   m_GameObject: {fileID: 2095791}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 2e6886f3ef7bf6a4a8d418960b5d85e9, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -260,7 +260,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 6200000, guid: 2e6886f3ef7bf6a4a8d418960b5d85e9, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
@@ -270,7 +270,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!114 &2095796
 MonoBehaviour:
@@ -284,6 +284,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c8df3ed646d4f545a07f5a21f1e1370, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  wasLaunched: 0
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -388,7 +389,8 @@ GameObject:
   - component: {fileID: 642890769}
   - component: {fileID: 642890772}
   - component: {fileID: 642890771}
-  - component: {fileID: 642890773}
+  - component: {fileID: 642890774}
+  - component: {fileID: 642890775}
   m_Layer: 0
   m_Name: Player1 Paddle
   m_TagString: Untagged
@@ -478,7 +480,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -489,7 +491,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 5
 --- !u!70 &642890772
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -525,7 +527,7 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 2.6800008, y: 0.5200001}
   m_Direction: 1
---- !u!114 &642890773
+--- !u!114 &642890774
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -534,9 +536,44 @@ MonoBehaviour:
   m_GameObject: {fileID: 642890768}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 212ecaf993cc27344895b71f61ea6e63, type: 3}
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 8d9ef8e7010a81b4f86bf38afed5e8ad, type: 3}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents: []
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Game
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
+--- !u!114 &642890775
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 642890768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bf98807d25151f48ac675247d8ba3f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MyPlayerInput: {fileID: 642890774}
+  speed: 4
+  paddle: {fileID: 642890771}
+  BallController: {fileID: 2095796}
+  ReceivingGameInputs: 1
 --- !u!1 &1100432238
 GameObject:
   m_ObjectHideFlags: 0
@@ -598,7 +635,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: -0.01783228}
@@ -845,7 +882,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0.015626669}
@@ -963,7 +1000,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -974,7 +1011,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 5
 --- !u!70 &1662322442
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -1019,6 +1056,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1662322438}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 212ecaf993cc27344895b71f61ea6e63, type: 3}
+  m_Script: {fileID: 11500000, guid: 1634fac24be95b84b988ba8b8f86f424, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 4
+  paddle: {fileID: 1662322441}
+  ReceivingGameInputs: 1
