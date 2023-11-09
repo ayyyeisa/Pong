@@ -2,55 +2,31 @@
 /// 
 /// File: Player1Controller
 /// Author: Isa Luluquisin
-/// Date: October something, 2023
+/// Date: November 8, 2023
 /// 
-/// Description: This controls Player 1's paddles (paddle to the left). 
-/// Player 1 is capable of starting the game using the spacebar,
-/// as well as quitting and restarting using esc and 'r' respectively.
+/// Description: This controls the player 1 paddle (paddle to the left)
 /// 
 /// </summary>
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.SceneManagement;
+using static UnityEngine.Rendering.VirtualTexturing.Debugging;
 
 public class Player1Controller : MonoBehaviour
 {
-    #region Variables
-    [SerializeField] private PlayerInput MyPlayerInput;
-    private InputAction restartRound;
-    private InputAction restartGame;
-    private InputAction quit;
-    private InputAction launch;
-    //private InputAction pause;
-
-    private float speed = 8;
+    [SerializeField] private float speed = 8;
     [SerializeField] private Rigidbody2D paddle;
 
-    private float moveDirection;
-    [SerializeField] private BallController ballController;
-    [SerializeField] private bool ReceivingGameInputs;
-    [SerializeField] private GameObject startScene;
-    #endregion
+    public InputController InputControllerInstance;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        ReceivingGameInputs = false;
-        PlayerInput();
-    }
-
-    void Update()
+    private void Update()
     {
         GetInputFunctions();
     }
 
     private void GetInputFunctions()
     {
-        if(ReceivingGameInputs)
+        if(InputControllerInstance.ReceivingGameInputs)
         {
             //starts upward movement if player presses w
             if (Input.GetKeyDown(KeyCode.W))
@@ -74,70 +50,11 @@ public class Player1Controller : MonoBehaviour
                 paddle.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             }
         }
-    }
 
-    #region Menu Functions
-    private void PlayerInput()
-    {
-        MyPlayerInput.currentActionMap.Enable();
-
-        quit = MyPlayerInput.currentActionMap.FindAction("Quit");
-        restartRound = MyPlayerInput.currentActionMap.FindAction("RestartRound");
-        restartGame = MyPlayerInput.currentActionMap.FindAction("RestartGame");
-        launch = MyPlayerInput.currentActionMap.FindAction("Launch");
-
-        quit.started += Quit_started;
-        restartRound.started += RestartRound_started;
-        launch.performed += Launch_performed;
-        //pause.started += Pause_started;
-    }
-
-    private void RestartRound_started(InputAction.CallbackContext obj)
-    {
-        ballController.RestartRound();
-    }
-
-    private void RestartGame_started(InputAction.CallbackContext obj)
-    {
-        //reloads current scene when enter is pressed
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
-
-    private void Quit_started(InputAction.CallbackContext obj)
-    {
-        //quits game with escape key
-        Debug.Log("Quit Game");
-        Application.Quit();
-    }
-
-    private void Launch_performed(InputAction.CallbackContext obj)
-    {
-        //receiving game inputs = start scene has already been disabled
-        if (ReceivingGameInputs)
-        {
-            ballController.Launch();
-        }
-        //game has not started yet
         else
         {
-            startScene.gameObject.SetActive(false);
-            ReceivingGameInputs = true;
+            //prevents paddle movement if game is not receiving input
+            paddle.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         }
-    }
-
-    //private void Pause_started(InputAction.CallbackContext obj)
-    //{
-        //brings up pause menu
-    //}
-    #endregion
-
-    public void OnDestroy()
-    {
-        restartRound.started -= RestartRound_started;
-        restartGame.started -= RestartGame_started;
-        quit.started -= Quit_started;
-        launch.performed -= Launch_performed;
-        //pause.started -= Pause_started;
-        
     }
 }

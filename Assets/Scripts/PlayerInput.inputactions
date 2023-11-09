@@ -33,15 +33,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Pause",
-                    "type": "Button",
-                    "id": "bbd6bca9-9b47-4745-bef4-1d8cd24b1167",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "RestartGame",
                     "type": "Button",
                     "id": "fcd761c5-a576-4204-9413-e4f9c8f909ce",
@@ -82,17 +73,6 @@
                     "processors": "",
                     "groups": "",
                     "action": "RestartRound",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "75e45504-f61f-40a1-a48d-bf27776148bf",
-                    "path": "<Keyboard>/p",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Pause",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
