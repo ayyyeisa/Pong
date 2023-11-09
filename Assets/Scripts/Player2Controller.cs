@@ -19,7 +19,7 @@ public class Player2Controller : MonoBehaviour
 {
     #region Variables
 
-    [SerializeField] private float speed;
+    [SerializeField] private float speed = 8;
     [SerializeField] private Rigidbody2D paddle;
 
     private float moveDirection;
@@ -30,7 +30,6 @@ public class Player2Controller : MonoBehaviour
     void Start()
     {
         //ReceivingGameInputs = false;
-        speed = 4;
     }
 
     void Update()
@@ -43,26 +42,22 @@ public class Player2Controller : MonoBehaviour
         //starts upward movement if player presses the up arrow
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            Debug.Log("Player 2 is moving up");
             paddle.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 1 * speed);
         }
         //ends upward movement if player stops pressing the up arrow key
         if (Input.GetKeyUp((KeyCode.UpArrow)))
         {
-            Debug.Log("Player 2 stopped moving up");
             paddle.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         }
 
         //starts downward movement if player presses the down arrow
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
-            Debug.Log("Player 2 moves down");
             paddle.GetComponent<Rigidbody2D>().velocity = new Vector2(0, -1 * speed);
         }
         //ends downward movement if player stops pressing the up arrow key
         if (Input.GetKeyUp((KeyCode.DownArrow)))
         {
-            Debug.Log("Player 2 stopped moving down");
             paddle.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         }
     }

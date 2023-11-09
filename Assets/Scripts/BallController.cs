@@ -14,20 +14,25 @@ using System;
 using System.Runtime.CompilerServices;
 using UnityEngine.SceneManagement;
 using static UnityEngine.Rendering.VirtualTexturing.Debugging;
+using Random = UnityEngine.Random;
+using Unity.VisualScripting;
+using TMPro;
 
 public class BallController : MonoBehaviour
 {
     #region Variables
     [SerializeField] private Rigidbody2D ball;
     [SerializeField] bool wasLaunched;
-    [SerializeField] private float ballSpeed = 3;
-    private float ballSpeedMultiplier = .1f;
-    private System.Random random;
+    [SerializeField] private float speedMultiplier = 1.1f;
+
+    private Vector2 randomVec;
+    [SerializeField] private GameManager gM;
     #endregion
 
     // Start is called before the first frame update
     void Start()
     {
+        ball = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
@@ -39,42 +44,43 @@ public class BallController : MonoBehaviour
         }
     }
     public void OnCollisionEnter2D(Collision2D collision)
-    {
-        Debug.Log("Reached OnCollision");        
-        if(collision.gameObject.tag == "KillBox")
+    {     
+        if(collision.gameObject.tag == "P1KillBox")
         {
-            Debug.Log("Ball reached Killbox");
             wasLaunched = false;
+            gM.UpdateP2Score();
         }
-        else
+        else if(collision.gameObject.tag == "P2KillBox")
         {
-            Debug.Log("Ball speed should be increasing");
-            //ballSpeed *= ballSpeedMultiplier;
-            ball.velocity = Vector2.Reflect(ball.velocity, collision.contacts[0].normal);
+            wasLaunched = false;
+            gM.UpdateP1Score();
+        }
+        //speeds up ball's velocity if it collides with paddles or walls
+        else
+        {   
+            ball.velocity *= speedMultiplier;
         }
        
     }
 
-    //private static float NextFloat(float min, float max)
-    //{
-    //  random = new System.Random();
-    //double val = (random.NextDouble() * (max - min) + min);
-    //return (float)val;
-    //}
+    private Vector2 GenerateRandomVector()
+    {
+        randomVec = new Vector2(Random.Range(-6f, 6f), Random.Range(-6f, 6f));
+        return randomVec;
+    }
 
     public void Launch()
     {
         if(!wasLaunched)
         {
             wasLaunched = true;
-           GetComponent<Rigidbody2D>().velocity = new Vector2(-5f, 5f); //randomize this
-            //GetComponent<Rigidbody2D>().velocity = new Vector2(random.NextFloat(10, 10), random.Next(10, 10));
+            GetComponent<Rigidbody2D>().velocity = GenerateRandomVector();
         }
     }
 
-    
-
-    //method that speeds up ball's velocity
-    //private void ballSpeed()
+    public void RestartRound()
+    {
+        transform.position = new Vector2(0, 0);
+    }
 
 }

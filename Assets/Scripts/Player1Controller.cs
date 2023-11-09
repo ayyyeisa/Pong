@@ -11,6 +11,7 @@
 /// </summary>
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -20,23 +21,25 @@ public class Player1Controller : MonoBehaviour
 {
     #region Variables
     [SerializeField] private PlayerInput MyPlayerInput;
-    private InputAction restart;
+    private InputAction restartRound;
+    private InputAction restartGame;
     private InputAction quit;
     private InputAction launch;
     //private InputAction pause;
 
-    //private bool isMoving;
-    [SerializeField] private float speed = 4;
+    private float speed = 8;
     [SerializeField] private Rigidbody2D paddle;
 
     private float moveDirection;
-    public BallController BallController;
-    public bool ReceivingGameInputs; //change to private later
+    [SerializeField] private BallController ballController;
+    [SerializeField] private bool ReceivingGameInputs;
+    [SerializeField] private TMP_Text startText;
     #endregion
 
     // Start is called before the first frame update
     void Start()
     {
+        ReceivingGameInputs = false;
         PlayerInput();
     }
 
@@ -47,30 +50,29 @@ public class Player1Controller : MonoBehaviour
 
     private void GetInputFunctions()
     {
-        //starts upward movement if player presses w
-        if (Input.GetKeyDown(KeyCode.W))
+        if(ReceivingGameInputs)
         {
-            Debug.Log("Player 1 is moving up");
-            paddle.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 1 * speed);
-        }
-        //ends upward movement if player stops pressing w
-        if (Input.GetKeyUp((KeyCode.W)))
-        {
-            Debug.Log("Player 1 stopped moving up");
-            paddle.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-        }
+            //starts upward movement if player presses w
+            if (Input.GetKeyDown(KeyCode.W))
+            {
+                paddle.GetComponent<Rigidbody2D>().velocity = new Vector2(0, 1 * speed);
+            }
+            //ends upward movement if player stops pressing w
+            if (Input.GetKeyUp((KeyCode.W)))
+            {
+                paddle.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            }
 
-        //starts downward movement if player presses the s
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            Debug.Log("Player 1 moves down");
-            paddle.GetComponent<Rigidbody2D>().velocity = new Vector2(0, -1 * speed);
-        }
-        //ends downward movement if player stops pressing s
-        if (Input.GetKeyUp((KeyCode.S)))
-        {
-            Debug.Log("Player 1 stopped moving down");
-            paddle.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            //starts downward movement if player presses the s
+            if (Input.GetKeyDown(KeyCode.S))
+            {
+                paddle.GetComponent<Rigidbody2D>().velocity = new Vector2(0, -1 * speed);
+            }
+            //ends downward movement if player stops pressing s
+            if (Input.GetKeyUp((KeyCode.S)))
+            {
+                paddle.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            }
         }
     }
 
@@ -80,18 +82,24 @@ public class Player1Controller : MonoBehaviour
         MyPlayerInput.currentActionMap.Enable();
 
         quit = MyPlayerInput.currentActionMap.FindAction("Quit");
-        restart = MyPlayerInput.currentActionMap.FindAction("Restart");
+        restartRound = MyPlayerInput.currentActionMap.FindAction("RestartRound");
+        restartGame = MyPlayerInput.currentActionMap.FindAction("RestartGame");
         launch = MyPlayerInput.currentActionMap.FindAction("Launch");
 
         quit.started += Quit_started;
-        restart.started += Restart_started;
+        restartRound.started += RestartRound_started;
         launch.performed += Launch_performed;
         //pause.started += Pause_started;
     }
 
-    private void Restart_started(InputAction.CallbackContext obj)
+    private void RestartRound_started(InputAction.CallbackContext obj)
     {
-        //reloads current scene when r is pressed
+        ballController.RestartRound();
+    }
+
+    private void RestartGame_started(InputAction.CallbackContext obj)
+    {
+        //reloads current scene when enter is pressed
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
@@ -104,10 +112,16 @@ public class Player1Controller : MonoBehaviour
 
     private void Launch_performed(InputAction.CallbackContext obj)
     {
+        //receiving game inputs = start scene has already been disabled
         if (ReceivingGameInputs)
         {
-            Debug.Log("Ball was launched");
-            BallController.Launch();
+            ballController.Launch();
+        }
+        //game has not started yet
+        else
+        {
+            startText.gameObject.SetActive(false);
+            ReceivingGameInputs = true;
         }
     }
 
@@ -119,7 +133,8 @@ public class Player1Controller : MonoBehaviour
 
     public void OnDestroy()
     {
-        restart.started -= Restart_started;
+        restartRound.started -= RestartRound_started;
+        restartGame.started -= RestartGame_started;
         quit.started -= Quit_started;
         launch.performed -= Launch_performed;
         //pause.started -= Pause_started;
