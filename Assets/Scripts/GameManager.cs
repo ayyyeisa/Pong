@@ -19,14 +19,12 @@ public class GameManager : MonoBehaviour
     private int p1Score;
     private int p2Score;
 
-    [SerializeField] private TMP_Text startText;
     [SerializeField] private TMP_Text endGameText;
 
     #endregion
 
     public void Start()
     {
-        startText.text = "Press space to start game. <br> Good luck!";
         scoreText.text = "0 - 0";
     }
 

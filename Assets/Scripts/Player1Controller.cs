@@ -33,7 +33,7 @@ public class Player1Controller : MonoBehaviour
     private float moveDirection;
     [SerializeField] private BallController ballController;
     [SerializeField] private bool ReceivingGameInputs;
-    [SerializeField] private TMP_Text startText;
+    [SerializeField] private GameObject startScene;
     #endregion
 
     // Start is called before the first frame update
@@ -120,7 +120,7 @@ public class Player1Controller : MonoBehaviour
         //game has not started yet
         else
         {
-            startText.gameObject.SetActive(false);
+            startScene.gameObject.SetActive(false);
             ReceivingGameInputs = true;
         }
     }
