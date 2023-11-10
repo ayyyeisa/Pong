@@ -1,12 +1,11 @@
-/// <summary>
-/// 
-/// File: Player1Controller
-/// Author: Isa Luluquisin
-/// Date: November 8, 2023
-/// 
-/// Description: This controls the player 1 paddle (paddle to the left)
-/// 
-/// </summary>
+/*****************************************************************************
+// File Name : Player1Controller
+// Author : Isa Luluquisin
+// Creation Date : November 8, 2023
+//
+// Brief Description : This controls the player 1 paddle (paddle to the left)
+*****************************************************************************/
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,9 +13,12 @@ using static UnityEngine.Rendering.VirtualTexturing.Debugging;
 
 public class Player1Controller : MonoBehaviour
 {
-    [SerializeField] private float speed = 8;
+    [Tooltip("References the paddle that it will be affecting")]
     [SerializeField] private Rigidbody2D paddle;
+    [Tooltip("Determines the speed of the paddle")]
+    [SerializeField] private float speed = 8;
 
+    [Tooltip("References the input controller to check if recieving game inputs")]
     public InputController InputControllerInstance;
 
     private void Update()
@@ -24,6 +26,11 @@ public class Player1Controller : MonoBehaviour
         GetInputFunctions();
     }
 
+    /// <summary>
+    /// Controls the player 1 paddle. Player 1 (paddle on left) may use W/S to move up and down.
+    /// This can only be done if ReceivingGameInputs is true, as it being false indicates that 
+    /// the game has not started yet.
+    /// </summary>
     private void GetInputFunctions()
     {
         if(InputControllerInstance.ReceivingGameInputs)

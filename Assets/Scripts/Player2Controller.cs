@@ -1,12 +1,10 @@
-/// <summary>
-/// 
-/// File: Player2Controller
-/// Author: Isa Luluquisin
-/// Date: November 7, 2023
-/// 
-/// Description: This controls Player 2's paddles (paddle to the right). 
-
-/// </summary>
+/*****************************************************************************
+// File Name : Player2Controller
+// Author : Isa Luluquisin
+// Creation Date : November 7, 2023
+//
+// Brief Description : This controls the player 2 paddle (paddle to the right)
+*****************************************************************************/
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,17 +15,25 @@ public class Player2Controller : MonoBehaviour
 {
     #region Variables
 
-    [SerializeField] private float speed = 8;
+    [Tooltip("References the paddle that it will be affecting")]
     [SerializeField] private Rigidbody2D paddle;
+    [Tooltip("Determines the speed of the paddle")]
+    [SerializeField] private float speed = 8;
 
+    [Tooltip("References the input controller to check if recieving game inputs")]
     public InputController InputControllerInstance;
     #endregion
 
     private void Update()
     {
         GetInputFunctions();
-    }
+   }
 
+    /// <summary>
+    /// Controls the player 2 paddle. Player 2 (right paddle) may use up and down arrows 
+    /// This can only be done if ReceivingGameInputs is true, as it being false indicates that 
+    /// the game has not started yet.
+    /// </summary>
     private void GetInputFunctions()
     {
         if(InputControllerInstance.ReceivingGameInputs)

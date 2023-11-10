@@ -285,9 +285,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ball: {fileID: 2095795}
-  speedMultiplier: 1.1
-  tempX: 5
-  tempY: 5
   gM: {fileID: 1961915169}
   WasLaunched: 0
 --- !u!1 &24800238
@@ -833,8 +830,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47fa9a0a4dd7da74980df16a0664de7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 8
   paddle: {fileID: 642890771}
+  speed: 8
   InputControllerInstance: {fileID: 642890775}
 --- !u!1 &1071658308
 GameObject:
@@ -1039,14 +1036,16 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Enter: Restart Game
+  m_text: 'Esc: Quit Game
+
+    Enter: Restart Game
 
     R: Reset Ball
 
-    W/S: Player 1 Movement
+    W/S: Player
+    1 Movement
 
-    Arrow
-    Keys: Player 2 Movement
+    Arrow Keys: Player 2 Movement
 
     Space: Launch Ball'
   m_isRightToLeft: 0
@@ -1745,8 +1744,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1634fac24be95b84b988ba8b8f86f424, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 4
   paddle: {fileID: 1662322441}
+  speed: 8
   InputControllerInstance: {fileID: 642890775}
 --- !u!1 &1725061989
 GameObject:
@@ -1786,7 +1785,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Press space to start game. <br> Good luck!
+  m_text: Press SPACE to Start Game. <br> Good luck!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

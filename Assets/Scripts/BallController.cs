@@ -36,7 +36,6 @@ public class BallController : MonoBehaviour
     public bool WasLaunched;
     #endregion
 
-    // Start is called before the first frame update
     void Start()
     {
         ball = GetComponent<Rigidbody2D>();
@@ -59,12 +58,14 @@ public class BallController : MonoBehaviour
     /// </summary>
     /// <param name="collision">The collision of the ball and other game object</param>
     public void OnCollisionEnter2D(Collision2D collision)
-    {     
+    {   
+        //updates player2 score if ball gets past player1 paddle
         if(collision.gameObject.tag == "P1KillBox")
         {
             gM.UpdateP2Score();
             ResetPosition();
         }
+        //updates player1 score if ball gets past player2 paddle
         else if(collision.gameObject.tag == "P2KillBox")
         {
             gM.UpdateP1Score();
@@ -78,6 +79,10 @@ public class BallController : MonoBehaviour
        
     }
 
+    /// <summary>
+    /// This stops the ball from moving and resets it back to the center of the screen
+    /// whenever the method is called
+    /// </summary>
     public void ResetPosition()
     {
         WasLaunched=false;
@@ -85,6 +90,10 @@ public class BallController : MonoBehaviour
         transform.position = new Vector2(0, 0);
     }
 
+    /// <summary>
+    /// This method generates a random vector so that the ball can be launched in a random direction
+    /// </summary>
+    /// <returns>the vector determining the velocity and direction the ball is launched</returns>
     private Vector2 GenerateRandomVector()
     {
         randomVecX = GenerateRandomVelocity();
@@ -93,14 +102,21 @@ public class BallController : MonoBehaviour
         return randomVec;
     }
 
+    /// <summary>
+    /// Generates a signed float between 5-10. This method will be called on in 
+    /// GenerateRandomVector() to get a random number for the ball's velocity. 
+    /// Limiting the numbers to be between 5-10 ensures that the ball is not launched
+    /// too fast nor too slow in any direction.
+    /// </summary>
+    /// <returns>the velocity of the ball in one direction</returns>
     private float GenerateRandomVelocity()
     {
         float num = Random.Range(0, 5);
         float sign = Random.Range(0, 2);
 
-        //generates a number for the velocity
+        //generates a float for the velocity
         #region if statements for number
-        if (num == 0)
+        if (num == 0) 
         {
             num = Random.Range(5f, 6f);
         }
@@ -138,6 +154,9 @@ public class BallController : MonoBehaviour
         return num;
     }
 
+    /// <summary>
+    /// Launches the ball in a random direction if the ball has not already been launched.
+    /// </summary>
     public void Launch()
     {
         if(!WasLaunched)
