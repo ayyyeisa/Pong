@@ -33,6 +33,7 @@ public class InputController : MonoBehaviour
     [Tooltip("References to game objects to disable them at beginning and end of game")]
     [SerializeField] private BallController ballController;
     [SerializeField] private GameObject startScene;
+    [SerializeField] GameManager GM;
     #endregion
 
     // Start is called before the first frame update
@@ -90,6 +91,8 @@ public class InputController : MonoBehaviour
         if ((ReceivingGameInputs == false) && (GameEnded == false))
         {
             startScene.gameObject.SetActive(false);
+            GM.instructionText.gameObject.SetActive(true);
+            GM.scoreText.gameObject.SetActive(true);
             ReceivingGameInputs = true;
         }
         //game has ended. prevents player from launching ball and moving paddles

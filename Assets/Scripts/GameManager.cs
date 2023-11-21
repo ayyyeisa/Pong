@@ -15,13 +15,14 @@ public class GameManager : MonoBehaviour
 {
     #region Variables
     [Header("Variables affecting scoring:")]
-    [SerializeField] private TMP_Text scoreText;
+    public TMP_Text scoreText;
     private int p1Score;
     private int p2Score;
 
     [Header("References to the end screen and text")]
     [SerializeField] private GameObject endScene;
     [SerializeField] private TMP_Text endGameText;
+    public TMP_Text instructionText;
 
     [Tooltip("References to game objects. Used to disable scripts")]
     public InputController InputControllerInstance;

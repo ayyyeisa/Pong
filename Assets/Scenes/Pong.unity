@@ -818,6 +818,7 @@ MonoBehaviour:
   GameEnded: 0
   ballController: {fileID: 2095796}
   startScene: {fileID: 1794301852}
+  GM: {fileID: 1961915169}
 --- !u!114 &642890776
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -995,7 +996,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1108430311
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1388,7 +1389,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1415246035
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1991,6 +1992,7 @@ MonoBehaviour:
   scoreText: {fileID: 1415246037}
   endScene: {fileID: 1499877224}
   endGameText: {fileID: 261953574}
+  instructionText: {fileID: 1108430312}
   InputControllerInstance: {fileID: 642890775}
   BallControllerInstance: {fileID: 2095796}
 --- !u!4 &1961915170
